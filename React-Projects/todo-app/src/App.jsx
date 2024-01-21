@@ -10,7 +10,7 @@ import { TodoItemsContext } from "./store/todo-items-store";
 function APP() {
   const [todoItems, setTodoItems] = useState([]);
 
-  const handleNewItem = (itemName, itemDueDate) => {
+  const addNewItem = (itemName, itemDueDate) => {
     const newTodoItems = [
       ...todoItems,
       { name: itemName, dueDate: itemDueDate },
@@ -28,21 +28,22 @@ function APP() {
     // });
   };
 
-  const handleDeleteItem = (todoItemName) => {
+  const deleteItem = (todoItemName) => {
     const newTodoItems = todoItems.filter((item) => item.name !== todoItemName);
     setTodoItems(newTodoItems);
   };
 
   return (
-    <TodoItemsContext.Provider value={todoItems}>
+    <TodoItemsContext.Provider value={{
+      todoItems,
+      addNewItem,
+      deleteItem,
+    }}>
       <center className="todo-content">
         <AppName />
-        <AddTodo onNewItem={handleNewItem} />
-        <WelcomeMessage todoItems={todoItems}></WelcomeMessage>
-        <TodoItems
-          todoItems={todoItems}
-          onDeleteClick={handleDeleteItem}
-        ></TodoItems>
+        <AddTodo />
+        <WelcomeMessage></WelcomeMessage>
+        <TodoItems></TodoItems>
       </center>
     </TodoItemsContext.Provider>
   );
