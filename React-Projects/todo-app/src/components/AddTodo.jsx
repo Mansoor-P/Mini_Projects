@@ -1,20 +1,30 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { BiMessageAdd } from "react-icons/bi";
 
 function AddTodo({ onNewItem }) {
-  const [todoName, setTodoName] = useState("");
-  const [dueDate, setDueDate] = useState("");
+  // const [todoName, setTodoName] = useState("");
+  // const [dueDate, setDueDate] = useState("");
 
-  const handleNameChange = (event) => {
-    setTodoName(event.target.value);
-  };
-  const handleDateChange = (event) => {
-    setDueDate(event.target.value);
-  };
+  const todoNameElement = useRef();
+  const dueDateElement = useRef();
+
+  // const handleNameChange = (event) => {
+  //   setTodoName(event.target.value);
+  // };
+  // const handleDateChange = (event) => {
+  //   setDueDate(event.target.value);
+  // };
+
   const handleAddButtonClicked = () => {
+    // onNewItem(todoName, dueDate);
+    // setTodoName("");
+    // setDueDate("");
+
+    const todoName = todoNameElement.current.value;
+    const dueDate = dueDateElement.current.value;
+    todoNameElement.current.value = "";
+    dueDateElement.current.value = "";
     onNewItem(todoName, dueDate);
-    setTodoName("");
-    setDueDate("");
   };
 
   return (
@@ -23,17 +33,19 @@ function AddTodo({ onNewItem }) {
         <div className="col-6">
           <input
             type="text"
+            ref={todoNameElement}
             placeholder="Enter Todo Here"
-            onChange={handleNameChange}
-            value={todoName}
+            // onChange={handleNameChange}
+            // value={todoName}
           />
         </div>
         <div className="col-4">
           <input
             type="date"
+            ref={dueDateElement}
             placeholder="dd/mm/yyyy"
-            onChange={handleDateChange}
-            value={dueDate}
+            // onChange={handleDateChange}
+            // value={dueDate}
           />
         </div>
         <div className="col-2">
